@@ -6,10 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
@@ -31,16 +28,33 @@ public class HelloController {
     Button generator1Btn;
     @FXML
     Button generator2Btn;
-
     @FXML
     TableView<MyMessage> table;
 
+    @FXML
+    Slider slider1;
+    @FXML
+    Slider slider2;
+    @FXML
+    Label repeat2;
+
+
     public void initialize() {
         initTable();
-        Generator gen1 = new Generator(200, "gen1", messages2);
-        Generator gen2 = new Generator(300, "gen2", messages2);
+
+
+
+
+        Generator gen1 = new Generator(300, "gen1", messages2);
+
+        Generator gen2 = new Generator(250, "gen2", messages2);
         generator1Btn.setOnAction(actionEvent -> gen1.start());
         generator2Btn.setOnAction(actionEvent -> gen2.start());
+
+        slider2.valueProperty().addListener((val, o, n) -> {gen2.k.set((Integer)n);});
+//        slider2.valueProperty().addListener((val, o, n) -> {gen2.k.set(n);});
+
+
     }
 
     private void initTable() {
@@ -53,7 +67,7 @@ public class HelloController {
         TableColumn<MyMessage, String> columnMessage = new TableColumn<>("Message");
         columnMessage.setCellValueFactory(new PropertyValueFactory<>("message"));
         columnMessage.setCellFactory(TextFieldTableCell.forTableColumn());
-        columnMessage.setMinWidth(200);
+        columnMessage.setMinWidth(250);
 
         TableColumn<MyMessage, String> columnDateTime = new TableColumn<>("DateTime");
         columnDateTime.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
@@ -68,3 +82,4 @@ public class HelloController {
 
 
 }
+
